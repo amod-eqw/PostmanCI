@@ -1,0 +1,685 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PostmanTests",
+		"_postman_id": "efd1a31d-6e1c-4daa-3268-c5658f99be63",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DELETE",
+			"description": "",
+			"item": [
+				{
+					"name": "Delete and call Get ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"Activities deleted\"] = responseCode.code === 200;",
+									"",
+									"tests[\"Status code is 204\"] = responseCode.code !== 204;",
+									"",
+									"",
+									"",
+									"",
+									"tests[\"Body is correct\"] = responseBody === \"\";",
+									"",
+									"//postman.setNextRequest(\"Get after Delete\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://fakerestapi.azurewebsites.net/api/Activities/20",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get after Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if(responseCode.code === 200) {",
+									"    ",
+									"  var jsonData = JSON.parse(responseBody);",
+									"tests[\"ID is same as passed in request\"] = jsonData.ID === 20;",
+									"    ",
+									"}",
+									"",
+									"    // Stop execution",
+									"    //postman.setNextRequest(null);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://fakerestapi.azurewebsites.net/api/Activities/20",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"description": "",
+			"item": [
+				{
+					"name": "Validate entire schema for required fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"\r",
+									"var schema = {\r",
+									" \r",
+									"    \"$schema\": \"http://json-schema.org/draft-04/schema\",\r",
+									"    \"title\": \"Planet\",\r",
+									"    \"description\": \"A planet.\",\r",
+									"    \"properties\": {\r",
+									"        \"type\": \"array\",\r",
+									"        \"created\": {\r",
+									"            \"description\": \"The ISO 8601 date format of the time that this resource was created.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"date-time\"\r",
+									"        },\r",
+									"        \"orbital_period\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The number of standard days it takes for this planet to complete a single orbit of its local star.\"\r",
+									"        },\r",
+									"        \"films\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"description\": \"An array of Film URL Resources that this planet has appeared in.\"\r",
+									"        },\r",
+									"        \"url\": {\r",
+									"            \"description\": \"The hypermedia URL of this resource.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"uri\"\r",
+									"        },\r",
+									"        \"edited\": {\r",
+									"            \"description\": \"the ISO 8601 date format of the time that this resource was edited.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"date-time\"\r",
+									"        },\r",
+									"        \"population\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The average populationof sentient beings inhabiting this planet.\"\r",
+									"        },\r",
+									"        \"surface_water\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The percentage of the planet surface that is naturally occuring water or bodies of water.\"\r",
+									"        },\r",
+									"        \"diameter\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The diameter of this planet in kilometers.\"\r",
+									"        },\r",
+									"        \"rotation_period\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The number of standard hours it takes for this planet to complete a single rotation on its axis.\"\r",
+									"        },\r",
+									"        \"residents\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"description\": \"An array of People URL Resources that live on this planet.\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The name of this planet.\"\r",
+									"        },\r",
+									"        \"terrain\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"the terrain of this planet. Comma-seperated if diverse.\"\r",
+									"        },\r",
+									"        \"climate\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The climate of this planet. Comma-seperated if diverse.\"\r",
+									"        },\r",
+									"        \"gravity\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"A number denoting the gravity of this planet. Where 1 is normal.\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"name\",\r",
+									"        \"rotation_period\",\r",
+									"        \"orbital_period\",\r",
+									"        \"diameter\",\r",
+									"        \"climate\",\r",
+									"        \"gravity\",\r",
+									"        \"terrain\",\r",
+									"        \"surface_water\",\r",
+									"        \"population\",\r",
+									"        \"residents\",\r",
+									"        \"films\",\r",
+									"        \"created\",\r",
+									"        \"edited\",\r",
+									"        \"url\"\r",
+									"    ],\r",
+									"    // \"type\": \"array\"\r",
+									"};\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"tests[\"Required fields are present in response\"] = tv4.validate(jsonData, schema);\r",
+									"console.log(\"Validation failed: \", tv4.error);\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "https://swapi.co/api/planets/3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var schema = {\r",
+									" \r",
+									"    \"$schema\": \"http://json-schema.org/draft-04/schema\",\r",
+									"    \"title\": \"Planet\",\r",
+									"    \"description\": \"A planet.\",\r",
+									"    \"properties\": {\r",
+									"        \"created\": {\r",
+									"            \"description\": \"The ISO 8601 date format of the time that this resource was created.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"date-time\"\r",
+									"        },\r",
+									"        \"orbital_period\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The number of standard days it takes for this planet to complete a single orbit of its local star.\"\r",
+									"        },\r",
+									"        \"films\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"description\": \"An array of Film URL Resources that this planet has appeared in.\"\r",
+									"        },\r",
+									"        \"url\": {\r",
+									"            \"description\": \"The hypermedia URL of this resource.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"uri\"\r",
+									"        },\r",
+									"        \"edited\": {\r",
+									"            \"description\": \"the ISO 8601 date format of the time that this resource was edited.\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"format\": \"date-time\"\r",
+									"        },\r",
+									"        \"population\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The average populationof sentient beings inhabiting this planet.\"\r",
+									"        },\r",
+									"        \"surface_water\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The percentage of the planet surface that is naturally occuring water or bodies of water.\"\r",
+									"        },\r",
+									"        \"diameter\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The diameter of this planet in kilometers.\"\r",
+									"        },\r",
+									"        \"rotation_period\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The number of standard hours it takes for this planet to complete a single rotation on its axis.\"\r",
+									"        },\r",
+									"        \"residents\": {\r",
+									"            \"type\": \"array\",\r",
+									"            \"description\": \"An array of People URL Resources that live on this planet.\"\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The name of this planet.\"\r",
+									"        },\r",
+									"        \"terrain\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"the terrain of this planet. Comma-seperated if diverse.\"\r",
+									"        },\r",
+									"        \"climate\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"The climate of this planet. Comma-seperated if diverse.\"\r",
+									"        },\r",
+									"        \"gravity\": {\r",
+									"            \"type\": \"string\",\r",
+									"            \"description\": \"A number denoting the gravity of this planet. Where 1 is normal.\"\r",
+									"        }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"name\",\r",
+									"        \"rotation_period\",\r",
+									"        \"orbital_period\",\r",
+									"        \"diameter\",\r",
+									"        \"climate\",\r",
+									"        \"gravity\",\r",
+									"        \"terrain\",\r",
+									"        \"surface_water\",\r",
+									"        \"population\",\r",
+									"        \"residents\",\r",
+									"        \"films\",\r",
+									"        \"created\",\r",
+									"        \"edited\",\r",
+									"        \"url\"\r",
+									"    ],\r",
+									"    \"type\": \"array\"\r",
+									"};\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var response = responseBody;\r",
+									"\r",
+									"var data1 = [jsonData.name,jsonData.rotation_period];\r",
+									"tests[\"Valid name and rotation period\"] = tv4.validate(data1, schema);\r",
+									"\r",
+									"//tests[\"entire schema with response json\"] = tv4.validate(jsonData,schema);\r",
+									"console.log(\"Validation failed: \", tv4.error);\r",
+									"\r",
+									"pm.response.to.be.ok;\r",
+									"\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET: Validate response attributes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"films\", jsonData.films);",
+									"",
+									"tests[\"Validating films first element in array\"] = jsonData.films[0] === \"http://swapi.co/api/films/1/\";",
+									"",
+									"tests[\"Created date is in UTC format\"]= jsonData.created === \"2014-12-10T11:37:19.144000Z\";",
+									"",
+									"tests[\"Edited date is in UTC format\"]= jsonData.edited === \"2014-12-20T20:58:18.421000Z\";",
+									"",
+									"tests[\"Request URL is present in the response body\"] = jsonData.url === \"http://swapi.co/api/planets/3/\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET: Validation for 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Test1: Response code expected 404 validated\"] = responseCode.code === 404;",
+									"tests[\"Test2: Valid Status Code Name : Not found\"] = responseCode.name.has(\"Not found\");",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"tests[\"Response contains object not found\"] = jsonData.detail === \"Not found\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/15123",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validating response body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var response = responseBody;",
+									"",
+									"console.log(\"varialble response string\" +response);",
+									"",
+									"",
+									"",
+									"tests[\"Body is correct\"] = responseBody === response;",
+									"",
+									"console.log(\"resoponse body\" +responseBody);",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Validations for response headers"
+					},
+					"response": []
+				},
+				{
+					"name": "Response Header Validations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"var header = postman.getResponseHeader(\"Content-Type\");",
+									"var server = postman.getResponseHeader(\"Server\");",
+									"",
+									"console.log(\"header value is:\" +header);",
+									"console.log(\"header value is:\" +server);",
+									"",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"",
+									"tests[\"Header contains value\"] = header === \"application/json\";",
+									"",
+									"",
+									"tests[\"Response header contains server value\"] = server === \"cloudflare-nginx\";"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://swapi.co/api/planets/3",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"description": "",
+			"item": [
+				{
+					"name": "Set global variable from response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var getid = jsonData.id;",
+									"console.log(\"id from POST:\" +getid);",
+									"postman.setGlobalVariable(\"id\", +getid);",
+									"",
+									"var setid = postman.getGlobalVariable(\"id\");",
+									"",
+									"console.log(\"environment variable set is:\" +setid);",
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://jsonplaceholder.typicode.com/posts",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    title: 'foo architecto reiciendis option',\r\n    body: 'bar magnam quisquam\\nqui cum reiciendis\\nquaerat animi amet',\r\n    userId: 1\r\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Status code and name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var getid = jsonData.id;",
+									"console.log(\"id from POST:\" +getid);",
+									"postman.setGlobalVariable(\"id\", +getid);",
+									"",
+									"var setid = postman.getGlobalVariable(\"id\");",
+									"",
+									"console.log(\"environment variable set is:\" +setid);",
+									"",
+									"tests[\"Status code is 201\"] = responseCode.code === 201;",
+									"",
+									"tests[\"Status code name has string\"] = responseCode.name.has(\"Created\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://jsonplaceholder.typicode.com/posts",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    title: 'foo architecto reiciendis option',\r\n    body: 'bar magnam quisquam\\nqui cum reiciendis\\nquaerat animi amet',\r\n    userId: 1\r\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST: Assert 404 status code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Object not found, status code 404\"] = responseCode.code === 404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://jsonplaceholder.typicode.com/posts/{{id}}",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Complete POST request Validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"\r",
+									"tests[\"Successful POST request\"] = responseCode.code === 200 || responseCode.code === 201 || responseCode.code === 202;\r",
+									"tests[\"Status code name has OK for successful POST request\"] = responseCode.name.has(\"OK\");\r",
+									"\r",
+									"\r",
+									"\r",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\r",
+									"var header = postman.getResponseHeader(\"Content-Type\");\r",
+									"tests[\"Header contains value\"] = header === \"application/json; charset=utf-8\";\r",
+									"\r",
+									"\r",
+									"var schema = {\r",
+									"\"ID\" :{ \"type\": \"integer\"},\r",
+									"\"Title\":{\"type\" : \"string\"},\r",
+									"\"DueDate\" : {\"type\":\"string\"},\r",
+									"\"Completed\" : {\"type\" : \"boolean\"}\r",
+									"};\r",
+									"\r",
+									"var requestJson = JSON.parse(request.data);\r",
+									"var jsonResponse = JSON.parse(responseBody);\r",
+									"var dataRecieved = [jsonResponse.ID,jsonResponse.Title,jsonResponse.DueDate,jsonResponse.Completed];\r",
+									"\r",
+									"tests[\"Schema validated against response\"] = tv4.validate(jsonResponse, schema);\r",
+									"console.log(\"Validation failed: \", tv4.error);\r",
+									"\r",
+									"\r",
+									"//Validating values from request to response\r",
+									"tests[\"New ID created for POST request is valid\"] = requestJson.ID === jsonResponse.ID;\r",
+									"tests[\"New Title created for POST request is valid\"] = requestJson.Title === jsonResponse.Title;\r",
+									"tests[\"Due date for POST request is valid and is in UTC format\"] = requestJson.DueDate === jsonResponse.DueDate;\r",
+									"tests[\"Status for POST request is valid\"] = requestJson.Completed === jsonResponse.Completed;\r",
+									"\r",
+									"\r",
+									"var getid = jsonResponse.ID;\r",
+									"postman.setGlobalVariable(\"ID\", +getid);\r",
+									"var setid = postman.getGlobalVariable(\"ID\");\r",
+									"console.log(\"environment variable set is:\" +setid);\r",
+									"\r",
+									"\r",
+									"\r",
+									"tests[\"Response time is less than 500ms\"] = responseTime < 500;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://fakerestapi.azurewebsites.net/api/Activities",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ID\": 110,\r\n  \"Title\": \"Test Post Request\",\r\n  \"DueDate\": \"2017-07-16T10:57:54.208Z\",\r\n  \"Completed\": false\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"description": "",
+			"item": [
+				{
+					"name": "Validating PUT, changed response values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Successful POST request\"] = responseCode.code === 200;\r",
+									"tests[\"Status code name has OK for successful POST request\"] = responseCode.name.has(\"OK\");\r",
+									"\r",
+									"\r",
+									"\r",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\r",
+									"var header = postman.getResponseHeader(\"Content-Type\");\r",
+									"tests[\"Header contains value\"] = header === \"application/json; charset=utf-8\";\r",
+									"\r",
+									"\r",
+									"var schema = {\r",
+									"\"ID\" :{ \"type\": \"integer\"},\r",
+									"\"Title\":{\"type\" : \"string\"},\r",
+									"\"DueDate\" : {\"type\":\"string\"},\r",
+									"\"Completed\" : {\"type\" : \"boolean\"}\r",
+									"};\r",
+									"\r",
+									"\r",
+									"var jsonResponse = JSON.parse(responseBody);\r",
+									"var dataRecieved = [jsonResponse.ID,jsonResponse.Title,jsonResponse.DueDate,jsonResponse.Completed];\r",
+									"\r",
+									"tests[\"Schema validated against response\"] = tv4.validate(dataRecieved, schema);\r",
+									"console.log(\"Validation failed: \", tv4.error);\r",
+									"\r",
+									"\r",
+									"tests[\"No change in ID after PUT request\"] = jsonResponse.ID === 30;\r",
+									"tests[\"Edited Title created for PUT request is valid\"] = jsonResponse.Title === \"Activity 31\";\r",
+									"tests[\"Changed Due date for PUT request is valid and is in UTC format\"] = jsonResponse.DueDate === \"2016-07-18T18:17:31.8753777+00:00\";\r",
+									"tests[\"Status for PUT request is valid\"] = jsonResponse.Completed === false;\r",
+									"\r",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://fakerestapi.azurewebsites.net/api/Activities/30",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 30,\n    \"Title\": \"Activity 31\",\n    \"DueDate\": \"2016-07-18T18:17:31.8753777+00:00\",\n    \"Completed\": false\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
