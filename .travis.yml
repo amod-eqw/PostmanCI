@@ -9,6 +9,7 @@ before_script:
   - node --version
   - npm --version
   - sudo ln -s /usr/bin/nodejs /usr/bin/node
+  - which newman
   - newman -v
 
 script:
