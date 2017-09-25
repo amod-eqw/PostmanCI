@@ -8,7 +8,8 @@ install:
 before_script:
   - node --version
   - npm --version
-  - newman --version
+  - sudo ln -s /usr/bin/nodejs /usr/bin/node
+  - newman -v
 
 script:
   - newman run collections/Postman Echo.postman_collection.json
