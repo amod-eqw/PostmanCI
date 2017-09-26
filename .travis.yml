@@ -18,7 +18,7 @@ notifications:
   email:
       recipients:
             - amod@eqw.io
-	    - satish@eqw.io
-      on_success: never # default: change
+            - satish@eqw.io
+      on_success: always # default: changed to always
       on_failure: always # default: always
 
