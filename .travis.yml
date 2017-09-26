@@ -14,3 +14,11 @@ before_script:
 script:
   - newman run collections/PostmanTests.postman_collection.json
 
+notifications:
+  email:
+      recipients:
+            - amod@eqw.io
+	    - satish@eqw.io
+      on_success: never # default: change
+      on_failure: always # default: always
+
