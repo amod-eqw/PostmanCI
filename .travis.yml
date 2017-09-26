@@ -10,7 +10,7 @@ before_script:
   - npm --version
   - sudo ln -s /usr/bin/nodejs /usr/bin/node
   - which newman
-  - newman -v
+  - /usr/local/bin/newman -v
 
 script:
-  - newman run collections/Postman Echo.postman_collection.json
+  - /usr/local/bin/newman run collections/Postman Echo.postman_collection.json
