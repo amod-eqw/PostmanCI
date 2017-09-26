@@ -9,4 +9,8 @@ before_script:
   - node --version
   - npm --version
   - which newman
+  - newman -v
+
+script:
+  - newman run collections/PostmanTests.postman_collection.json
 
